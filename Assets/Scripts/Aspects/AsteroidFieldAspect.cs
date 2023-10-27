@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -15,12 +16,13 @@ public readonly partial struct AsteroidFieldAspect : IAspect
 
     private readonly RefRO<AsteroidFieldProperties> _asteroidFieldProperties;
     private readonly RefRW<AsteroidFieldRandom> _asteroidFieldRandom;
+    
+    [ReadOnly] public readonly DynamicBuffer<AsteroidBuffer> asteroidPrefabBuffer;
 
     private readonly RefRW<AsteroidSpawnPoints> _asteroidSpawnPoints;
     private readonly RefRW<AsteroidSpawnTimer> _asteroidSpawnTimer;
     
     public int NumberOfAsteroidsToSpawn => _asteroidFieldProperties.ValueRO.NumberOfAsteroidsToSpawn;
-    public Entity AsteroidPrefab => _asteroidFieldProperties.ValueRO.AsteroidPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,12 @@ public readonly partial struct AsteroidFieldAspect : IAspect
     void Update()
     {
         
+    }
+
+    public Entity GetRandomAsteroidPrefab()
+    {
+        var randomIndex = _asteroidFieldRandom.ValueRW.Value.NextInt(asteroidPrefabBuffer.Length);
+        return asteroidPrefabBuffer[randomIndex].Value;
     }
     
     public bool AsteroidSpawnPointInitialized()
@@ -63,11 +71,11 @@ public readonly partial struct AsteroidFieldAspect : IAspect
     private float3 HalfDimensions => new()
     {
         x = _asteroidFieldProperties.ValueRO.FieldDimensions.x * 0.5f,
-        y = 0f,
-        z = _asteroidFieldProperties.ValueRO.FieldDimensions.y * 0.5f
+        y = _asteroidFieldProperties.ValueRO.FieldDimensions.y * 0.5f,
+        z = 0f
     };
 
-    private quaternion GetRandomRotation() => quaternion.RotateY(_asteroidFieldRandom.ValueRW.Value.NextFloat(-0.25f, 0.25f));
+    private quaternion GetRandomRotation() => quaternion.RotateZ(_asteroidFieldRandom.ValueRW.Value.NextFloat(-0.25f, 0.25f));
     private float GetRandomScale(float min) => _asteroidFieldRandom.ValueRW.Value.NextFloat(min, 1f);
     
     private float3 GetRandomAsteroidSpawnPoint()

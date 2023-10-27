@@ -2,6 +2,7 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 [BurstCompile]
 [UpdateInGroup(typeof(InitializationSystemGroup))]
@@ -22,11 +23,10 @@ public partial struct SpawnAsteroidSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        //
         state.Enabled = false;
         var asteroidFieldEntity = SystemAPI.GetSingletonEntity<AsteroidFieldProperties>();
         var asteroidField = SystemAPI.GetAspect<AsteroidFieldAspect>(asteroidFieldEntity);
-        
+
         var ecb = new EntityCommandBuffer(Allocator.Temp);
         var asteroidOffset = new float3(0f, -2f, 1f);
         
@@ -36,7 +36,7 @@ public partial struct SpawnAsteroidSystem : ISystem
         
         for (var i = 0; i < asteroidField.NumberOfAsteroidsToSpawn; i++)
         {
-            var newAsteroid = ecb.Instantiate(asteroidField.AsteroidPrefab);
+            var newAsteroid = ecb.Instantiate(asteroidField.GetRandomAsteroidPrefab());
             var newAsteroidTransform = asteroidField.GetRandomAsteroidTransform();
             ecb.SetComponent(newAsteroid, newAsteroidTransform);
     
