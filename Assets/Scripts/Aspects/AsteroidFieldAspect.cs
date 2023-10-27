@@ -1,0 +1,79 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine;
+
+public readonly partial struct AsteroidFieldAspect : IAspect
+{
+    public readonly Entity Entity;
+    
+    private readonly RefRO<LocalTransform> _transform;
+
+    private LocalTransform Transform => _transform.ValueRO;
+
+    private readonly RefRO<AsteroidFieldProperties> _asteroidFieldProperties;
+    private readonly RefRW<AsteroidFieldRandom> _asteroidFieldRandom;
+
+    private readonly RefRW<AsteroidSpawnPoints> _asteroidSpawnPoints;
+    private readonly RefRW<AsteroidSpawnTimer> _asteroidSpawnTimer;
+    
+    public int NumberOfAsteroidsToSpawn => _asteroidFieldProperties.ValueRO.NumberOfAsteroidsToSpawn;
+    public Entity AsteroidPrefab => _asteroidFieldProperties.ValueRO.AsteroidPrefab;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    
+    public bool AsteroidSpawnPointInitialized()
+    {
+        return _asteroidSpawnPoints.ValueRO.Value.IsCreated && AsteroidSpawnPointCount > 0;
+    }
+
+    private int AsteroidSpawnPointCount => _asteroidSpawnPoints.ValueRO.Value.Value.Value.Length;
+    
+    public LocalTransform GetRandomAsteroidTransform()
+    {
+        return new LocalTransform
+        {
+            Position = GetRandomPosition(),
+            Rotation = GetRandomRotation(),
+            Scale = GetRandomScale(0.5f)
+        };
+    }
+
+    private float3 GetRandomPosition()
+    {
+        var randomPosition = _asteroidFieldRandom.ValueRW.Value.NextFloat3(MinCorner, MaxCorner);
+        
+        return randomPosition;
+    }
+        
+    private float3 MinCorner => Transform.Position - HalfDimensions;
+    private float3 MaxCorner => Transform.Position + HalfDimensions;
+    private float3 HalfDimensions => new()
+    {
+        x = _asteroidFieldProperties.ValueRO.FieldDimensions.x * 0.5f,
+        y = 0f,
+        z = _asteroidFieldProperties.ValueRO.FieldDimensions.y * 0.5f
+    };
+
+    private quaternion GetRandomRotation() => quaternion.RotateY(_asteroidFieldRandom.ValueRW.Value.NextFloat(-0.25f, 0.25f));
+    private float GetRandomScale(float min) => _asteroidFieldRandom.ValueRW.Value.NextFloat(min, 1f);
+    
+    private float3 GetRandomAsteroidSpawnPoint()
+    {
+        return GetAsteroidSpawnPoint(_asteroidFieldRandom.ValueRW.Value.NextInt(AsteroidSpawnPointCount));
+    }
+
+    private float3 GetAsteroidSpawnPoint(int i) => _asteroidSpawnPoints.ValueRO.Value.Value.Value[i];
+}
