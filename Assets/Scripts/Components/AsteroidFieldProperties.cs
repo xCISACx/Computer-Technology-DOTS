@@ -22,3 +22,21 @@ public struct AsteroidBuffer : IBufferElementData
 {
     public Entity Value;
 }
+
+[InternalBufferCapacity(150)]
+public struct Wave1Asteroids : IBufferElementData
+{
+    public Entity Value;
+}
+
+[InternalBufferCapacity(150)]
+public struct Wave2Asteroids : IBufferElementData
+{
+    public Entity Value;
+}
+
+[InternalBufferCapacity(150)]
+public struct Wave3Asteroids : IBufferElementData
+{
+    public Entity Value;
+}

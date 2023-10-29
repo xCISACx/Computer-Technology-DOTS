@@ -16,6 +16,7 @@ public readonly partial struct AsteroidFieldAspect : IAspect
 
     private readonly RefRO<AsteroidFieldProperties> _asteroidFieldProperties;
     private readonly RefRW<AsteroidFieldRandom> _asteroidFieldRandom;
+    private readonly RefRW<WaveData> _waveData;
     
     [ReadOnly] public readonly DynamicBuffer<AsteroidBuffer> asteroidPrefabBuffer;
 
@@ -23,6 +24,10 @@ public readonly partial struct AsteroidFieldAspect : IAspect
     private readonly RefRW<AsteroidSpawnTimer> _asteroidSpawnTimer;
     
     public int NumberOfAsteroidsToSpawn => _asteroidFieldProperties.ValueRO.NumberOfAsteroidsToSpawn;
+    
+    public int Wave1Amount => _waveData.ValueRO.Wave1Amount;
+    public int Wave2Amount => _waveData.ValueRO.Wave2Amount;
+    public int Wave3Amount => _waveData.ValueRO.Wave3Amount;
 
     // Start is called before the first frame update
     void Start()
@@ -53,15 +58,25 @@ public readonly partial struct AsteroidFieldAspect : IAspect
     {
         return new LocalTransform
         {
-            Position = GetRandomPosition(),
+            Position = GetRandomPosition(MinCorner, MaxCorner),
+            Rotation = GetRandomRotation(),
+            Scale = GetRandomScale(0.5f)
+        };
+    }
+    
+    public LocalTransform GetRandomAsteroidTransformOffscreen()
+    {
+        return new LocalTransform
+        {
+            Position = new float3(-1000, 0, 0),
             Rotation = GetRandomRotation(),
             Scale = GetRandomScale(0.5f)
         };
     }
 
-    private float3 GetRandomPosition()
+    private float3 GetRandomPosition(float3 min, float3 max)
     {
-        var randomPosition = _asteroidFieldRandom.ValueRW.Value.NextFloat3(MinCorner, MaxCorner);
+        var randomPosition = _asteroidFieldRandom.ValueRW.Value.NextFloat3(min, max);
         
         return randomPosition;
     }
