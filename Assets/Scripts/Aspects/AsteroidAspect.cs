@@ -19,6 +19,7 @@ public readonly partial struct AsteroidAspect : IAspect
 
     public void Move(float deltaTime)
     {
+        // Move towards the center of the screen
         var moveDir = (new float3(0, 0, 0) - transform.ValueRO.Position);
         Position += moveDir * Speed * deltaTime;
     }

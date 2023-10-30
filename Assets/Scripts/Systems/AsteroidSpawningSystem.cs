@@ -9,7 +9,7 @@ using UnityEngine;
 
 [BurstCompile]
 [UpdateInGroup(typeof(InitializationSystemGroup))]
-public partial struct SpawnAsteroidSystem : ISystem
+public partial struct AsteroidSpawningSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
