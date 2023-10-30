@@ -172,7 +172,9 @@ MonoBehaviour:
     x: 10
     y: 10
   NumberOfAsteroidsToSpawn: 100
-  RandomSeed: 100
+  ShipSafetyRadius: 2
+  WaveAmounts: 320000006400000096000000
+  RandomSeed: 509788795
   AsteroidPrefabs:
   - {fileID: 5839934916481834297, guid: 66083abd855c3834cb699c253769f7f9, type: 3}
   - {fileID: 5839934916481834297, guid: f874a39447f2cdd4b9be5057c85254db, type: 3}

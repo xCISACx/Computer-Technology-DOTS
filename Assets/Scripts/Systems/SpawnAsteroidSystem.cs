@@ -30,6 +30,10 @@ public partial struct SpawnAsteroidSystem : ISystem
         var asteroidFieldEntity = SystemAPI.GetSingletonEntity<AsteroidFieldProperties>();
         var waveData = SystemAPI.GetComponent<WaveData>(asteroidFieldEntity);
         var asteroidField = SystemAPI.GetAspect<AsteroidFieldAspect>(asteroidFieldEntity);
+        
+        waveData.Wave1Amount = 50;
+        waveData.Wave2Amount = 100;
+        waveData.Wave3Amount = 150;
 
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 

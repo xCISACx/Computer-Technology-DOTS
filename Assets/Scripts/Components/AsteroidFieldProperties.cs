@@ -9,6 +9,7 @@ public struct AsteroidFieldProperties : IComponentData
 {
     public float2 FieldDimensions;
     public int NumberOfAsteroidsToSpawn;
+    public float ShipSafetyRadius;
     public float AsteroidSpawnRate;
 }
 

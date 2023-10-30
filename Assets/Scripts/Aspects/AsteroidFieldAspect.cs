@@ -24,6 +24,8 @@ public readonly partial struct AsteroidFieldAspect : IAspect
     private readonly RefRW<AsteroidSpawnTimer> _asteroidSpawnTimer;
     
     public int NumberOfAsteroidsToSpawn => _asteroidFieldProperties.ValueRO.NumberOfAsteroidsToSpawn;
+
+    public float ShipSafetyRadius => _asteroidFieldProperties.ValueRO.ShipSafetyRadius;
     
     public int Wave1Amount => _waveData.ValueRO.Wave1Amount;
     public int Wave2Amount => _waveData.ValueRO.Wave2Amount;
@@ -76,8 +78,13 @@ public readonly partial struct AsteroidFieldAspect : IAspect
 
     private float3 GetRandomPosition(float3 min, float3 max)
     {
-        var randomPosition = _asteroidFieldRandom.ValueRW.Value.NextFloat3(min, max);
-        
+        float3 randomPosition;
+        do
+        {
+            randomPosition = _asteroidFieldRandom.ValueRW.Value.NextFloat3(min, max);
+        }
+        while (math.distancesq(Transform.Position, randomPosition) <= ShipSafetyRadius);
+
         return randomPosition;
     }
         
