@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -33,41 +32,28 @@ public class AsteroidFieldBaker : Baker<AsteroidFieldMono>
         var asteroidFieldEntity = GetEntity(TransformUsageFlags.Dynamic);
         
         var buffer = AddBuffer<AsteroidBuffer>(asteroidFieldEntity);
-
-        /*var waveBuffer = AddBuffer<IntBufferElement>(asteroidFieldEntity);
-
-        foreach (var amount in authoring.WaveAmounts)
-        {
-            waveBuffer.Add(new IntBufferElement() { Value = amount });
-        }*/
         
         //buffer.ResizeUninitialized(authoring.AsteroidPrefabs.Length);
 
-        //NativeArray<int> waveAmounts = new NativeArray<int>(authoring.WaveAmounts.ToArray(), Allocator.Temp);
-        
-        /*var waveArray = authoring.WaveAmounts.ToArray();
-        NativeArray<int> waveAmounts = new NativeArray<int>(waveArray, Allocator.Temp);*/
+        NativeArray<int> waveAmounts = new NativeArray<int>(authoring.WaveAmounts.ToArray(), Allocator.Temp);
 
         for (int i = 0; i < authoring.AsteroidPrefabs.Length; i++)
         {
             buffer.Add(new AsteroidBuffer
                 { Value = GetEntity(authoring.AsteroidPrefabs[i], TransformUsageFlags.Dynamic) });
         }
-        
-        /*WaveData waveData = new WaveData
+
+        WaveData waveData = new WaveData
         {
             Wave1Amount = waveAmounts[0],
             Wave2Amount = waveAmounts[1],
             Wave3Amount = waveAmounts[2]
-        };*/
-
-        /*WaveData waveData = new WaveData
-        {
-            WaveAmounts = waveBuffer
         };
 
-        Debug.Log(waveData.WaveAmounts);*/
-
+        /*Debug.Log(waveAmounts[0]);
+        Debug.Log(waveAmounts[1]);
+        Debug.Log(waveAmounts[2]);*/
+        
         AddComponent(asteroidFieldEntity, new AsteroidFieldProperties
         {
             FieldDimensions = authoring.FieldDimensions,
@@ -82,7 +68,7 @@ public class AsteroidFieldBaker : Baker<AsteroidFieldMono>
         });
         AddComponent<AsteroidSpawnPoints>(asteroidFieldEntity);
         AddComponent<AsteroidSpawnTimer>(asteroidFieldEntity);
-        //AddComponent(asteroidFieldEntity, waveData);
+        AddComponent(asteroidFieldEntity, waveData);
         AddComponent<EntityBufferElement>(asteroidFieldEntity);
     }
 }

@@ -9,12 +9,11 @@ public partial struct PlayerProjectileAsteroidTriggerSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<SimulationSingleton>();
+        //state.RequireForUpdate<SimulationSingleton>();
     }
 
     public void OnUpdate(ref SystemState state)
     {
-        //Debug.Log("projectile trigger system on update");
         var ecb = new EntityCommandBuffer(Allocator.TempJob);
 
         var j = new ProcessTriggerEventsJob {
@@ -39,7 +38,7 @@ public partial struct PlayerProjectileAsteroidTriggerSystem : ISystem
         public ComponentLookup<PlayerProjectileProperties> projectileProperties;
         public EntityCommandBuffer Ecb;
 
-        public void Execute(TriggerEvent ce)
+        public void Execute(Unity.Physics.TriggerEvent ce)
         {
             var entityA = ce.EntityA;
             var entityB = ce.EntityB;
@@ -53,10 +52,10 @@ public partial struct PlayerProjectileAsteroidTriggerSystem : ISystem
                 health[entityB] = modifiedProjectileHealth;
                 
                 var modifiedHealth = health[entityA];
-                modifiedHealth.CurrentValue -= projectileProperties[entityB].Damage;
-                if (modifiedHealth.CurrentValue <= 0)
+                modifiedHealth.Value -= projectileProperties[entityB].Damage;
+                if (modifiedHealth.Value <= 0)
                 {
-                    Debug.Log(modifiedHealth.CurrentValue);
+                    Debug.Log(modifiedHealth.Value);
                     modifiedHealth.IsDead = true;   
                 }
                 health[entityA] = modifiedHealth;
@@ -71,10 +70,10 @@ public partial struct PlayerProjectileAsteroidTriggerSystem : ISystem
                 health[entityA] = modifiedProjectileHealth;
                 
                 var modifiedHealth = health[entityB];
-                modifiedHealth.CurrentValue -= projectileProperties[entityA].Damage;
-                if (modifiedHealth.CurrentValue <= 0)
+                modifiedHealth.Value -= projectileProperties[entityA].Damage;
+                if (modifiedHealth.Value <= 0)
                 {
-                    Debug.Log(modifiedHealth.CurrentValue);
+                    Debug.Log(modifiedHealth.Value);
                     modifiedHealth.IsDead = true;   
                 }
                 health[entityB] = modifiedHealth;

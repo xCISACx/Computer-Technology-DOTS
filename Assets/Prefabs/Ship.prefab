@@ -179,7 +179,6 @@ GameObject:
   - component: {fileID: 903583587216647400}
   - component: {fileID: 3933564803371713438}
   - component: {fileID: 8252098899993524420}
-  - component: {fileID: 5266306122180862052}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -399,23 +398,6 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
---- !u!114 &5266306122180862052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853452915338600233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1ae9385761e4ccba2e1403294e79e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 3
-  IsDead: 0
-  MovementSpeed: 1
-  RotationSpeed: 0.5
-  ProjectilePrefab: {fileID: 7407376909061845216, guid: b709d3bbd15949a469f4f7c8671a329b, type: 3}
 --- !u!1 &8771420966564156323
 GameObject:
   m_ObjectHideFlags: 0

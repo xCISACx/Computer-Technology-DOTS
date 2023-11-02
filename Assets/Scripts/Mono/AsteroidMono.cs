@@ -23,8 +23,10 @@ public class AsteroidBaker : Baker<AsteroidMono>
         AddComponent<AsteroidTag>(asteroidEntity);
         AddComponent(asteroidEntity, new HealthComponent()
         {
-            CurrentValue = authoring.Health,
+            Value = authoring.Health,
             IsDead = authoring.IsDead
         });
+
+        //AddComponent<AsteroidAspect>(asteroidEntity);
     }
 }
