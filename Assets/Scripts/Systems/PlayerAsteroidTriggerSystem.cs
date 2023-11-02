@@ -50,7 +50,7 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
                 var modifiedPlayerHealth = health[entityB];
                 
                 //TODO: change asteroid contact damage based on scale
-                modifiedPlayerHealth.Value -= 1;
+                //modifiedPlayerHealth.Value -= 1;
 
                 if (modifiedPlayerHealth.Value <= 0)
                 {
@@ -66,7 +66,7 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
                 var modifiedPlayerHealth = health[entityA];
                 
                 //TODO: change asteroid contact damage based on scale
-                modifiedPlayerHealth.Value -= 1;
+                //modifiedPlayerHealth.Value -= 1;
 
                 if (modifiedPlayerHealth.Value <= 0)
                 {

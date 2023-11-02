@@ -172,7 +172,7 @@ MonoBehaviour:
     z: 0
   m_PrimitiveSize:
     x: 0.41
-    y: 0
+    y: 0.15
     z: 0.51
   m_PrimitiveOrientation:
     Value:
@@ -185,7 +185,7 @@ MonoBehaviour:
     Radius: 0.205
     Axis: 2
   m_Cylinder:
-    Height: 0
+    Height: 0.15
     Radius: 0.255
     Axis: 1
   m_CylinderSideCount: 20
@@ -196,7 +196,7 @@ MonoBehaviour:
     m_BevelRadius: 0.05
     m_MinimumAngle: 2.5000002
   m_CustomMesh: {fileID: 0}
-  m_ForceUnique: 0
+  m_ForceUnique: 1
   m_Material:
     m_SupportsTemplate: 1
     m_Template: {fileID: 0}

@@ -75,6 +75,16 @@ public readonly partial struct AsteroidFieldAspect : IAspect
             Scale = GetRandomScale(0.5f)
         };
     }
+    
+    public LocalTransform GetRandomAsteroidTransformCloseToBounds()
+    {
+        return new LocalTransform
+        {
+            Position = GetRandomPosition(MinCorner - 1f, MaxCorner + 1f),
+            Rotation = GetRandomRotation(),
+            Scale = GetRandomScale(0.5f)
+        };
+    }
 
     private float3 GetRandomPosition(float3 min, float3 max)
     {

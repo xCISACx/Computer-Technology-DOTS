@@ -53,9 +53,10 @@ public partial struct PlayerProjectileAsteroidTriggerSystem : ISystem
                 
                 var modifiedHealth = health[entityA];
                 modifiedHealth.Value -= projectileProperties[entityB].Damage;
+                Debug.Log(modifiedHealth.Value);
                 if (modifiedHealth.Value <= 0)
                 {
-                    Debug.Log(modifiedHealth.Value);
+                    
                     modifiedHealth.IsDead = true;   
                 }
                 health[entityA] = modifiedHealth;
@@ -71,6 +72,7 @@ public partial struct PlayerProjectileAsteroidTriggerSystem : ISystem
                 
                 var modifiedHealth = health[entityB];
                 modifiedHealth.Value -= projectileProperties[entityA].Damage;
+                Debug.Log(modifiedHealth.Value);
                 if (modifiedHealth.Value <= 0)
                 {
                     Debug.Log(modifiedHealth.Value);

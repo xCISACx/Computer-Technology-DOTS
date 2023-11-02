@@ -53,7 +53,7 @@ public partial struct AsteroidSpawningSystem : ISystem
         for (var i = 0; i < asteroidField.NumberOfAsteroidsToSpawn; i++)
         {
             var newAsteroid = ecb.Instantiate(asteroidField.GetRandomAsteroidPrefab());
-            LocalTransform offscreenPosition = asteroidField.GetRandomAsteroidTransformOffscreen();
+            LocalTransform offscreenPosition = asteroidField.GetRandomAsteroidTransform();
             var newAsteroidTransform = offscreenPosition;
 
             HealthComponent healthComponent = new HealthComponent
@@ -70,14 +70,14 @@ public partial struct AsteroidSpawningSystem : ISystem
             allAsteroidsBuffer.Add(new EntityBufferElement { Value = newAsteroid });
         }
 
-        for (var i = 0; i < waveData.Wave1Amount; i++)
+        /*for (var i = 0; i < waveData.Wave1Amount; i++)
         {
             wave1AsteroidsBuffer.Add(allAsteroidsBuffer[i]);
             allAsteroidsBuffer.RemoveAt(i);
 
             var newAsteroidTransform = asteroidField.GetRandomAsteroidTransform();
             ecb.SetComponent(wave1AsteroidsBuffer[i].Value, newAsteroidTransform);
-        }
+        }*/
         
         var blobAsset = builder.CreateBlobAssetReference<AsteroidSpawnPointsBlob>(Allocator.Persistent);
         ecb.SetComponent(asteroidFieldEntity, new AsteroidSpawnPoints{Value = blobAsset});
