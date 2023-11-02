@@ -4,7 +4,7 @@ namespace Components
 {
     public partial struct HealthComponent : IComponentData
     {
-        public int Value;
+        public int CurrentValue;
         public bool IsDead;
     }
 }

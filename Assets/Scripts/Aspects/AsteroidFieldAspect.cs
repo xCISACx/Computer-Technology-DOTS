@@ -16,7 +16,7 @@ public readonly partial struct AsteroidFieldAspect : IAspect
 
     private readonly RefRO<AsteroidFieldProperties> _asteroidFieldProperties;
     private readonly RefRW<AsteroidFieldRandom> _asteroidFieldRandom;
-    private readonly RefRW<WaveData> _waveData;
+    //private readonly RefRW<WaveData> _waveData;
     
     [ReadOnly] public readonly DynamicBuffer<AsteroidBuffer> asteroidPrefabBuffer;
 
@@ -27,9 +27,9 @@ public readonly partial struct AsteroidFieldAspect : IAspect
 
     public float ShipSafetyRadius => _asteroidFieldProperties.ValueRO.ShipSafetyRadius;
     
-    public int Wave1Amount => _waveData.ValueRO.Wave1Amount;
+    /*public int Wave1Amount => _waveData.ValueRO.Wave1Amount;
     public int Wave2Amount => _waveData.ValueRO.Wave2Amount;
-    public int Wave3Amount => _waveData.ValueRO.Wave3Amount;
+    public int Wave3Amount => _waveData.ValueRO.Wave3Amount;*/
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +71,16 @@ public readonly partial struct AsteroidFieldAspect : IAspect
         return new LocalTransform
         {
             Position = new float3(-1000, 0, 0),
+            Rotation = GetRandomRotation(),
+            Scale = GetRandomScale(0.5f)
+        };
+    }
+    
+    public LocalTransform GetRandomAsteroidTransformCloseToBounds()
+    {
+        return new LocalTransform
+        {
+            Position = GetRandomPosition(MinCorner - 2f, MaxCorner + 2f),
             Rotation = GetRandomRotation(),
             Scale = GetRandomScale(0.5f)
         };

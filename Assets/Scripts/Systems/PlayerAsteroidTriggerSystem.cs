@@ -9,7 +9,7 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
-        //state.RequireForUpdate<SimulationSingleton>();
+        state.RequireForUpdate<SimulationSingleton>();
     }
 
     public void OnUpdate(ref SystemState state)
@@ -30,7 +30,7 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
         ecb.Playback(state.EntityManager);
     }
 
-    public partial struct ProcessTriggerEventsJob : ITriggerEventsJob
+    private partial struct ProcessTriggerEventsJob : ITriggerEventsJob
     {
         [ReadOnly] public ComponentLookup<AsteroidTag> AsteroidTag;
         [ReadOnly] public ComponentLookup<PlayerTag> PlayerTag;
@@ -38,7 +38,7 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
         //public ComponentLookup<AsteroidProperties> asteroidProperties;
         public EntityCommandBuffer Ecb;
 
-        public void Execute(Unity.Physics.TriggerEvent ce)
+        public void Execute(TriggerEvent ce)
         {
             var entityA = ce.EntityA;
             var entityB = ce.EntityB;
@@ -50,12 +50,12 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
                 var modifiedPlayerHealth = health[entityB];
                 
                 //TODO: change asteroid contact damage based on scale
-                modifiedPlayerHealth.Value -= 1;
+                //modifiedPlayerHealth.CurrentValue -= 1;
 
-                if (modifiedPlayerHealth.Value <= 0)
+                /*if (modifiedPlayerHealth.CurrentValue <= 0)
                 {
                     modifiedPlayerHealth.IsDead = true;   
-                }
+                }*/
                 health[entityB] = modifiedPlayerHealth;
             }
             
@@ -66,12 +66,12 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
                 var modifiedPlayerHealth = health[entityA];
                 
                 //TODO: change asteroid contact damage based on scale
-                modifiedPlayerHealth.Value -= 1;
+                //modifiedPlayerHealth.CurrentValue -= 1;
 
-                if (modifiedPlayerHealth.Value <= 0)
+                /*if (modifiedPlayerHealth.CurrentValue <= 0)
                 {
                     modifiedPlayerHealth.IsDead = true;   
-                }
+                }*/
                 health[entityA] = modifiedPlayerHealth;
             }
         }

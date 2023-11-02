@@ -7,7 +7,7 @@ public class PlayerProjectileMono : MonoBehaviour
 {
     public int Health;
     public bool IsDead;
-    [FormerlySerializedAs("ProjectileMoveSpeed")] public float ProjectileMovementSpeed;
+    public float ProjectileMovementSpeed;
     public int ProjectileDamage;
 
     public class ProjectileMoveSpeedBaker : Baker<PlayerProjectileMono>
@@ -23,7 +23,7 @@ public class PlayerProjectileMono : MonoBehaviour
             AddComponent<PlayerProjectileTriggerTag>(projectileEntity);
             AddComponent(projectileEntity, new HealthComponent()
             {
-                Value = authoring.Health,
+                CurrentValue = authoring.Health,
                 IsDead = authoring.IsDead
             });
         }

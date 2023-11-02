@@ -171,10 +171,10 @@ MonoBehaviour:
   FieldDimensions:
     x: 10
     y: 10
-  NumberOfAsteroidsToSpawn: 100
+  NumberOfAsteroidsToSpawn: 1
   ShipSafetyRadius: 2
-  WaveAmounts: 320000006400000096000000
-  RandomSeed: 623218838
+  WaveAmounts: 640000006400000064000000
+  RandomSeed: 1613049946
   AsteroidPrefabs:
   - {fileID: 5839934916481834297, guid: 66083abd855c3834cb699c253769f7f9, type: 3}
   - {fileID: 5839934916481834297, guid: f874a39447f2cdd4b9be5057c85254db, type: 3}
@@ -233,26 +233,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2145934886 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1853452915338600233, guid: 63922e4f6eb13d347ad01d4361e8fae8, type: 3}
-  m_PrefabInstance: {fileID: 1678493098291308549}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2145934887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145934886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1ae9385761e4ccba2e1403294e79e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementSpeed: 1
-  RotationSpeed: 0.5
-  ProjectilePrefab: {fileID: 7407376909061845216, guid: b709d3bbd15949a469f4f7c8671a329b, type: 3}
 --- !u!1001 &1678493098291308549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -324,10 +304,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1853452915338600233, guid: 63922e4f6eb13d347ad01d4361e8fae8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2145934887}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63922e4f6eb13d347ad01d4361e8fae8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -35,7 +35,7 @@ public class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         });
         AddComponent(playerEntity, new HealthComponent()
         {
-            Value = authoring.Health,
+            CurrentValue = authoring.Health,
             IsDead = authoring.IsDead
         });
     }
