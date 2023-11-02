@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using Components;
+using Unity.Entities;
 using Unity.Collections;
 using Unity.Physics;
 using UnityEngine;
@@ -18,6 +19,8 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
         var j = new ProcessTriggerEventsJob {
             AsteroidTag = SystemAPI.GetComponentLookup<AsteroidTag>(isReadOnly: true),
             PlayerTag = SystemAPI.GetComponentLookup<PlayerTag>(isReadOnly: true),
+            health = SystemAPI.GetComponentLookup<HealthComponent>(),
+            //asteroidProperties = SystemAPI.GetComponentLookup<AsteroidProperties>(),
             Ecb = ecb
         };
 
@@ -31,6 +34,8 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
     {
         [ReadOnly] public ComponentLookup<AsteroidTag> AsteroidTag;
         [ReadOnly] public ComponentLookup<PlayerTag> PlayerTag;
+        public ComponentLookup<HealthComponent> health;
+        //public ComponentLookup<AsteroidProperties> asteroidProperties;
         public EntityCommandBuffer Ecb;
 
         public void Execute(Unity.Physics.TriggerEvent ce)
@@ -38,10 +43,36 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
             var entityA = ce.EntityA;
             var entityB = ce.EntityB;
 
-            if (AsteroidTag.HasComponent(entityA) && PlayerTag.HasComponent(entityB)
-                || AsteroidTag.HasComponent(entityB) && PlayerTag.HasComponent(entityA))
+            if (AsteroidTag.HasComponent(entityA) && PlayerTag.HasComponent(entityB))
             {
-                Debug.LogWarning("Player collided with asteroid");
+                Debug.Log("Player collided with asteroid A");
+
+                var modifiedPlayerHealth = health[entityB];
+                
+                //TODO: change asteroid contact damage based on scale
+                modifiedPlayerHealth.Value -= 1;
+
+                if (modifiedPlayerHealth.Value <= 0)
+                {
+                    modifiedPlayerHealth.IsDead = true;   
+                }
+                health[entityB] = modifiedPlayerHealth;
+            }
+            
+            if (AsteroidTag.HasComponent(entityB) && PlayerTag.HasComponent(entityA))
+            {
+                Debug.Log("Player collided with asteroid B");
+                
+                var modifiedPlayerHealth = health[entityA];
+                
+                //TODO: change asteroid contact damage based on scale
+                modifiedPlayerHealth.Value -= 1;
+
+                if (modifiedPlayerHealth.Value <= 0)
+                {
+                    modifiedPlayerHealth.IsDead = true;   
+                }
+                health[entityA] = modifiedPlayerHealth;
             }
         }
     }

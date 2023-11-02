@@ -1,8 +1,11 @@
-﻿using Unity.Entities;
+﻿using Components;
+using Unity.Entities;
 using UnityEngine;
 
 public class PlayerAuthoring : MonoBehaviour
 {
+    public int Health;
+    public bool IsDead;
     public float MovementSpeed;
     public float RotationSpeed = 0.5f;
     public GameObject ProjectilePrefab;
@@ -29,6 +32,11 @@ public class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddComponent(playerEntity, new ProjectilePrefab
         {
             Value = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic)
+        });
+        AddComponent(playerEntity, new HealthComponent()
+        {
+            Value = authoring.Health,
+            IsDead = authoring.IsDead
         });
     }
 }
