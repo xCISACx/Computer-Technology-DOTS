@@ -50,9 +50,9 @@ public class AsteroidFieldBaker : Baker<AsteroidFieldMono>
             Wave3Amount = waveAmounts[2]
         };
 
-        Debug.Log(waveAmounts[0]);
+        /*Debug.Log(waveAmounts[0]);
         Debug.Log(waveAmounts[1]);
-        Debug.Log(waveAmounts[2]);
+        Debug.Log(waveAmounts[2]);*/
         
         AddComponent(asteroidFieldEntity, new AsteroidFieldProperties
         {

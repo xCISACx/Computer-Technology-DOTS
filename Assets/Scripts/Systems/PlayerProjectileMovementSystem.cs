@@ -9,9 +9,9 @@ public partial struct PlayerProjectileMovementSystem : ISystem
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
 
-        foreach (var (transform, moveSpeed) in SystemAPI.Query<RefRW<LocalTransform>, PlayerProjectileMovementSpeed>())
+        foreach (var (transform, projectileProperties) in SystemAPI.Query<RefRW<LocalTransform>, PlayerProjectileProperties>())
         {
-            transform.ValueRW.Position += transform.ValueRO.Up() * moveSpeed.Value * deltaTime;
+            transform.ValueRW.Position += transform.ValueRO.Up() * projectileProperties.MovementSpeed * deltaTime;
         }
     }
 }

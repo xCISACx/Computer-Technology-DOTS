@@ -12,12 +12,6 @@ public struct PlayerMovementProperties : IComponentData
     public float RotationSpeed;
 }
 
-public struct PlayerTag : IComponentData
-{
-}
-
-public struct PlayerProjectileTag : IComponentData, IEnableableComponent {}
-
 public struct ProjectilePrefab : IComponentData
 {
     public Entity Value;

@@ -174,7 +174,7 @@ MonoBehaviour:
   NumberOfAsteroidsToSpawn: 100
   ShipSafetyRadius: 2
   WaveAmounts: 320000006400000096000000
-  RandomSeed: 488472906
+  RandomSeed: 623218838
   AsteroidPrefabs:
   - {fileID: 5839934916481834297, guid: 66083abd855c3834cb699c253769f7f9, type: 3}
   - {fileID: 5839934916481834297, guid: f874a39447f2cdd4b9be5057c85254db, type: 3}
@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 1
+  RotationSpeed: 0.5
   ProjectilePrefab: {fileID: 7407376909061845216, guid: b709d3bbd15949a469f4f7c8671a329b, type: 3}
 --- !u!1001 &1678493098291308549
 PrefabInstance:
@@ -303,6 +304,22 @@ PrefabInstance:
     - target: {fileID: 1853452915338600233, guid: 63922e4f6eb13d347ad01d4361e8fae8, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8252098899993524420, guid: 63922e4f6eb13d347ad01d4361e8fae8, type: 3}
+      propertyPath: m_ShapeType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8252098899993524420, guid: 63922e4f6eb13d347ad01d4361e8fae8, type: 3}
+      propertyPath: m_Cylinder.Height
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8252098899993524420, guid: 63922e4f6eb13d347ad01d4361e8fae8, type: 3}
+      propertyPath: m_PrimitiveSize.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8252098899993524420, guid: 63922e4f6eb13d347ad01d4361e8fae8, type: 3}
+      propertyPath: m_PrimitiveOrientation.Value.x
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
