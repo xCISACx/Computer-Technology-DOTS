@@ -92,6 +92,7 @@ public readonly partial struct AsteroidFieldAspect : IAspect
         do
         {
             randomPosition = _asteroidFieldRandom.ValueRW.Value.NextFloat3(min, max);
+            randomPosition.z = 0f;
         }
         while (math.distancesq(Transform.Position, randomPosition) <= ShipSafetyRadius);
 
@@ -100,7 +101,7 @@ public readonly partial struct AsteroidFieldAspect : IAspect
         
     private float3 MinCorner => Transform.Position - HalfDimensions;
     private float3 MaxCorner => Transform.Position + HalfDimensions;
-    private float3 HalfDimensions => new()
+    public float3 HalfDimensions => new()
     {
         x = _asteroidFieldProperties.ValueRO.FieldDimensions.x * 0.5f,
         y = _asteroidFieldProperties.ValueRO.FieldDimensions.y * 0.5f,

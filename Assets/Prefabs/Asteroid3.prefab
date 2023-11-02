@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6202003251928126517}
   - component: {fileID: 8681385231339292630}
   - component: {fileID: -5561588095165160240}
+  - component: {fileID: -8619058998709282185}
   m_Layer: 0
   m_Name: Asteroid3
   m_TagString: Untagged
@@ -296,3 +297,24 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
+--- !u!114 &-8619058998709282185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839934916481834297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb54ea4f67dc17342bcd49954c53502d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DrawColliders: 0
+  DrawColliderEdges: 1
+  DrawColliderAabbs: 0
+  DrawBroadphase: 0
+  DrawMassProperties: 0
+  DrawContacts: 0
+  DrawCollisionEvents: 1
+  DrawTriggerEvents: 0
+  DrawJoints: 0

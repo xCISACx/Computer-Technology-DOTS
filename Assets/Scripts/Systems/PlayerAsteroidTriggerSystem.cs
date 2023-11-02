@@ -28,6 +28,7 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
         state.Dependency.Complete(); 
         
         ecb.Playback(state.EntityManager);
+        ecb.Dispose();
     }
 
     public partial struct ProcessTriggerEventsJob : ITriggerEventsJob
