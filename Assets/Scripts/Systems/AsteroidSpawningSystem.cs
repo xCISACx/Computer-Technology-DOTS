@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Components;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -55,7 +56,13 @@ public partial struct AsteroidSpawningSystem : ISystem
             LocalTransform offscreenPosition = asteroidField.GetRandomAsteroidTransformOffscreen();
             var newAsteroidTransform = offscreenPosition;
 
+            HealthComponent healthComponent = new HealthComponent
+            {
+                Value = Mathf.CeilToInt(newAsteroidTransform.Scale * 3f)
+            };
+
             ecb.SetComponent(newAsteroid, newAsteroidTransform);
+            ecb.SetComponent(newAsteroid, healthComponent);
     
             var newAsteroidSpawnPoint = newAsteroidTransform.Position;
             arrayBuilder[i] = newAsteroidSpawnPoint;
