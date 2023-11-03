@@ -4,8 +4,10 @@ Create a small space shooter game with the following features:
 
 Simple movement:
 > I use WASD to move the ship and it rotates in the direction you're moving.
+
 Shooting:
 > I use the Space bar to shoot projectiles.
+
 Waves of enemies:
 > Asteroids spawn at the start and, when destroyed, they get pooled and teleported outside of the game bounds, moving towards the center and being able to be destroyed again.
 
