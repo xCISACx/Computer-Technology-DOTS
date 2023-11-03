@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 
+[BurstCompile]
 [UpdateInGroup(typeof(SimulationSystemGroup))]
 [UpdateBefore(typeof(TransformSystemGroup))]
 public partial struct FireProjectileSystem : ISystem

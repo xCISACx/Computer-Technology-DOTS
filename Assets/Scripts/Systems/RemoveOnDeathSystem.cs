@@ -1,4 +1,5 @@
 ﻿using Components;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics;
@@ -6,9 +7,11 @@ using Unity.Physics.Systems;
 using Unity.Transforms;
 using UnityEngine;
 
+[BurstCompile]
 [UpdateBefore(typeof(TransformSystemGroup))]
 public partial class RemoveOnDeathSystem : SystemBase
 {
+    [BurstCompile]
     protected override void OnUpdate()
     {
         var asteroidFieldEntity = SystemAPI.GetSingletonEntity<AsteroidFieldProperties>();

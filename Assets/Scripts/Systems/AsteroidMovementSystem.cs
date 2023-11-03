@@ -12,12 +12,6 @@ public partial struct AsteroidMovementSystem : ISystem
     }
 
     [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
-    }
-    
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         var asteroidFieldEntity = SystemAPI.GetSingletonEntity<AsteroidFieldProperties>();

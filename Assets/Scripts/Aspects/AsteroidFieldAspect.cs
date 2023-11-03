@@ -31,18 +31,6 @@ public readonly partial struct AsteroidFieldAspect : IAspect
     public int Wave2Amount => _waveData.ValueRO.Wave2Amount;
     public int Wave3Amount => _waveData.ValueRO.Wave3Amount;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public Entity GetRandomAsteroidPrefab()
     {
         var randomIndex = _asteroidFieldRandom.ValueRW.Value.NextInt(asteroidPrefabBuffer.Length);

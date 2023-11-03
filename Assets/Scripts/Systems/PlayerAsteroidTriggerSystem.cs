@@ -1,20 +1,26 @@
 ﻿using Components;
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Collections;
 using Unity.Physics;
+using Unity.Physics.Systems;
 using UnityEngine;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[BurstCompile]
+[UpdateInGroup(typeof(AfterPhysicsSystemGroup))]
 public partial struct PlayerAsteroidTriggerSystem : ISystem
 {
+    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        //state.RequireForUpdate<SimulationSingleton>();
+        state.RequireForUpdate<SimulationSingleton>();
+        state.Enabled = false;
     }
 
+    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var ecb = new EntityCommandBuffer(Allocator.TempJob);
+        /*var ecb = new EntityCommandBuffer(Allocator.TempJob);
 
         var j = new ProcessTriggerEventsJob {
             AsteroidTag = SystemAPI.GetComponentLookup<AsteroidTag>(isReadOnly: true),
@@ -28,9 +34,10 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
         state.Dependency.Complete(); 
         
         ecb.Playback(state.EntityManager);
-        ecb.Dispose();
+        ecb.Dispose();*/
     }
 
+    [BurstCompile]
     public partial struct ProcessTriggerEventsJob : ITriggerEventsJob
     {
         [ReadOnly] public ComponentLookup<AsteroidTag> AsteroidTag;
@@ -46,7 +53,7 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
 
             if (AsteroidTag.HasComponent(entityA) && PlayerTag.HasComponent(entityB))
             {
-                Debug.Log("Player collided with asteroid A");
+                //Debug.Log("Player collided with asteroid A");
 
                 var modifiedPlayerHealth = health[entityB];
                 
@@ -62,7 +69,7 @@ public partial struct PlayerAsteroidTriggerSystem : ISystem
             
             if (AsteroidTag.HasComponent(entityB) && PlayerTag.HasComponent(entityA))
             {
-                Debug.Log("Player collided with asteroid B");
+                //Debug.Log("Player collided with asteroid B");
                 
                 var modifiedPlayerHealth = health[entityA];
                 

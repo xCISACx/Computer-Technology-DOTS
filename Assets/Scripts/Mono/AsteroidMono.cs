@@ -26,7 +26,5 @@ public class AsteroidBaker : Baker<AsteroidMono>
             Value = authoring.Health,
             IsDead = authoring.IsDead
         });
-
-        //AddComponent<AsteroidAspect>(asteroidEntity);
     }
 }

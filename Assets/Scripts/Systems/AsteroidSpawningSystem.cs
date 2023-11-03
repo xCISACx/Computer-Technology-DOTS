@@ -9,19 +9,14 @@ using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
-[UpdateInGroup(typeof(InitializationSystemGroup))]
+//[UpdateInGroup(typeof(InitializationSystemGroup))]
 public partial struct AsteroidSpawningSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
+        state.Enabled = true;
         state.RequireForUpdate<AsteroidFieldProperties>();
-    }
-
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
     }
 
     [BurstCompile]
@@ -32,28 +27,28 @@ public partial struct AsteroidSpawningSystem : ISystem
         var waveData = SystemAPI.GetComponent<WaveData>(asteroidFieldEntity);
         var asteroidField = SystemAPI.GetAspect<AsteroidFieldAspect>(asteroidFieldEntity);
         
-        waveData.Wave1Amount = 50;
+        /*waveData.Wave1Amount = 50;
         waveData.Wave2Amount = 100;
-        waveData.Wave3Amount = 150;
+        waveData.Wave3Amount = 150;*/
 
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
         var entityManager = state.EntityManager;
             
-        var allAsteroidsBuffer = entityManager.GetBuffer<EntityBufferElement>(asteroidFieldEntity);
+        // var allAsteroidsBuffer = entityManager.GetBuffer<EntityBufferElement>(asteroidFieldEntity);
         
-        var wave1AsteroidsBuffer = entityManager.GetBuffer<EntityBufferElement>(asteroidFieldEntity);
         /*var wave2AsteroidsBuffer = entityManager.GetBuffer<EntityBufferElement>(asteroidFieldEntity);
+        var wave1AsteroidsBuffer = entityManager.GetBuffer<EntityBufferElement>(asteroidFieldEntity);
         var wave3AsteroidsBuffer = entityManager.GetBuffer<EntityBufferElement>(asteroidFieldEntity);*/
 
-        var builder = new BlobBuilder(Allocator.Temp);
+        /*var builder = new BlobBuilder(Allocator.Temp);
         ref var spawnPoints = ref builder.ConstructRoot<AsteroidSpawnPointsBlob>();
-        var arrayBuilder = builder.Allocate(ref spawnPoints.Value, asteroidField.NumberOfAsteroidsToSpawn);
+        var arrayBuilder = builder.Allocate(ref spawnPoints.Value, asteroidField.NumberOfAsteroidsToSpawn);*/
         
         for (var i = 0; i < asteroidField.NumberOfAsteroidsToSpawn; i++)
         {
             var newAsteroid = ecb.Instantiate(asteroidField.GetRandomAsteroidPrefab());
-            LocalTransform offscreenPosition = asteroidField.GetRandomAsteroidTransform();
+            LocalTransform offscreenPosition = asteroidField.GetRandomAsteroidTransformCloseToBounds();
             var newAsteroidTransform = offscreenPosition;
 
             HealthComponent healthComponent = new HealthComponent
@@ -64,10 +59,10 @@ public partial struct AsteroidSpawningSystem : ISystem
             ecb.SetComponent(newAsteroid, newAsteroidTransform);
             ecb.SetComponent(newAsteroid, healthComponent);
     
-            var newAsteroidSpawnPoint = newAsteroidTransform.Position;
-            arrayBuilder[i] = newAsteroidSpawnPoint;
+            /*var newAsteroidSpawnPoint = newAsteroidTransform.Position;
+            arrayBuilder[i] = newAsteroidSpawnPoint;*/
 
-            allAsteroidsBuffer.Add(new EntityBufferElement { Value = newAsteroid });
+            // allAsteroidsBuffer.Add(new EntityBufferElement { Value = newAsteroid });
         }
 
         /*for (var i = 0; i < waveData.Wave1Amount; i++)
@@ -79,10 +74,10 @@ public partial struct AsteroidSpawningSystem : ISystem
             ecb.SetComponent(wave1AsteroidsBuffer[i].Value, newAsteroidTransform);
         }*/
         
-        var blobAsset = builder.CreateBlobAssetReference<AsteroidSpawnPointsBlob>(Allocator.Persistent);
+        /*var blobAsset = builder.CreateBlobAssetReference<AsteroidSpawnPointsBlob>(Allocator.Persistent);
         ecb.SetComponent(asteroidFieldEntity, new AsteroidSpawnPoints{Value = blobAsset});
-        builder.Dispose();
+        builder.Dispose();*/
         
-        ecb.Playback(state.EntityManager);
+        ecb.Playback(entityManager);
     }
 }

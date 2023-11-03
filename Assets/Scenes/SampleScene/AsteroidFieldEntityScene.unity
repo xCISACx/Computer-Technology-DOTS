@@ -169,12 +169,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FieldDimensions:
-    x: 10
-    y: 10
+    x: 20
+    y: 20
   NumberOfAsteroidsToSpawn: 1000
   ShipSafetyRadius: 2
   WaveAmounts: 320000006400000096000000
-  RandomSeed: 331662211
+  RandomSeed: 1354025202
   AsteroidPrefabs:
   - {fileID: 5839934916481834297, guid: 407ad5e6568076e40ab8a819bead188c, type: 3}
   - {fileID: 5839934916481834297, guid: 8a0845422332f7a49896e706a29509cb, type: 3}

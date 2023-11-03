@@ -1,42 +1,77 @@
-﻿using Components;
+﻿using Unity.Burst;
 using Unity.Entities;
 using Unity.Collections;
+using Unity.Mathematics;
 using Unity.Physics;
 using UnityEngine;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[BurstCompile]
+//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 public partial struct PlayerProjectileAsteroidTriggerSystem : ISystem
 {
+    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        //state.RequireForUpdate<SimulationSingleton>();
+        state.RequireForUpdate<SimulationSingleton>();
     }
 
+    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         var ecb = new EntityCommandBuffer(Allocator.TempJob);
 
-        var j = new ProcessTriggerEventsJob {
+        foreach (var playerProjectile in SystemAPI.Query<PlayerProjectileAspect>().WithAll<PlayerProjectileTriggerTag>())
+        {
+            foreach (var asteroid
+                     in SystemAPI.Query<AsteroidAspect>().WithAll<AsteroidTag>())
+            {
+                //var buffer = SystemAPI.GetSingleton<EndVariableRateSimulationEntityCommandBufferSystem.Singleton>();
+
+                if (math.distance(playerProjectile.Position.x, asteroid.Position.x) < 0.3f &&
+                    math.distance(playerProjectile.Position.y, asteroid.Position.y) < 0.3f)
+                {
+                    var modifiedProjectileHealth = playerProjectile.Health;
+                    modifiedProjectileHealth.IsDead = true;
+                    playerProjectile.Health = modifiedProjectileHealth;
+
+                    var modifiedHealth = asteroid.Health;
+                    modifiedHealth.Value -= playerProjectile.Damage;
+                    //Debug.Log(modifiedHealth.Value);
+                    if (modifiedHealth.Value <= 0)
+                    {
+                    
+                        modifiedHealth.IsDead = true;   
+                    }
+                    asteroid.Health = modifiedHealth;
+                    
+                    //playerProjectile.DestroyAsteroid(buffer.CreateCommandBuffer(state.WorldUnmanaged), playerProjectile.Entity);
+                    //asteroidAspect.DestroyAsteroid(buffer.CreateCommandBuffer(state.WorldUnmanaged), asteroidAspect.Entity);
+                }
+            }
+        }
+
+        /*var j = new ProcessTriggerEventsJob {
             AsteroidTag = SystemAPI.GetComponentLookup<AsteroidTag>(isReadOnly: true),
             PlayerProjectileTriggerTag = SystemAPI.GetComponentLookup<PlayerProjectileTriggerTag>(isReadOnly: true),
             health = SystemAPI.GetComponentLookup<HealthComponent>(),
-            projectileProperties = SystemAPI.GetComponentLookup<PlayerProjectileProperties>(),
+            projectileProperties = SystemAPI.GetComponentLookup<PlayerProjectileProperties>(true),
             Ecb = ecb
-        };
+        };*/
 
-        state.Dependency = j.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
-        state.Dependency.Complete(); 
+        //state.Dependency = j.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
+        //state.Dependency.Complete(); 
         
-        ecb.Playback(state.EntityManager);
-        ecb.Dispose();
+        //ecb.Playback(state.EntityManager);
+        //ecb.Dispose();
     }
 
-    public partial struct ProcessTriggerEventsJob : ITriggerEventsJob
+    //[BurstCompile]
+    /*public partial struct ProcessTriggerEventsJob : ITriggerEventsJob
     {
         [ReadOnly] public ComponentLookup<AsteroidTag> AsteroidTag;
         [ReadOnly] public ComponentLookup<PlayerProjectileTriggerTag> PlayerProjectileTriggerTag;
         public ComponentLookup<HealthComponent> health;
-        public ComponentLookup<PlayerProjectileProperties> projectileProperties;
+        [ReadOnly] public ComponentLookup<PlayerProjectileProperties> projectileProperties;
         public EntityCommandBuffer Ecb;
 
         public void Execute(Unity.Physics.TriggerEvent ce)
@@ -82,5 +117,5 @@ public partial struct PlayerProjectileAsteroidTriggerSystem : ISystem
                 health[entityB] = modifiedHealth;
             }
         }
-    }
+    }*/
 }
