@@ -18,7 +18,7 @@ The game has 1000 asteroids at all times, staying above 200 FPS on an RTX 3060 M
 At first, I was using the Unity Physics package for DOTS.
 This package made my performance drop considerably, so I opted to check positions instead in the end.
 
-These are screenshots of the profiler when using the Physics package:
+These are screenshots of the profiler when using the Physics package: 13a466c3c7491b1ad92b1d8d93e618e7d4cae540
 
 ![image](https://github.com/xCISACx/Computer-Technology-DOTS/assets/37281623/fc3a0289-042c-4596-a281-0e963af491a1)
 
@@ -27,7 +27,7 @@ These are screenshots of the profiler when using the Physics package:
 ![image](https://github.com/xCISACx/Computer-Technology-DOTS/assets/37281623/e6492d31-3640-4566-844f-9a36c7e16a22)
 
 
-And this is after switching away from the Physics package:
+And this is after switching away from the Physics package: 07abbe577acc3bc381f21163e3dd02e60f7ed0da
 
 ![image](https://github.com/xCISACx/Computer-Technology-DOTS/assets/37281623/92bcaf78-dd24-4166-b2ae-1243e9db7521)
 
